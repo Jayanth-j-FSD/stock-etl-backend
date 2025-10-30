@@ -2,7 +2,7 @@
   "name": "stocks-backend",
   "version": "0.0.1",
   "description": "Scalable NestJS backend with TypeORM and PostgreSQL",
-  "author": "",
+  "author": "Jayanth Reddy B",
   "private": true,
   "license": "MIT",
   "scripts": {
