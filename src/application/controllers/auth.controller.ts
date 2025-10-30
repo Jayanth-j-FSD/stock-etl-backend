@@ -1,10 +1,9 @@
-import { Controller, Post, Body, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from '../../domain/auth/auth.service';
 import { RegisterDto } from '../../domain/auth/dto/register.dto';
 import { LoginDto } from '../../domain/auth/dto/login.dto';
 import { RefreshTokenDto } from '../../domain/auth/dto/refresh-token.dto';
 import { TokenResponseDto } from '../../domain/auth/dto/token-response.dto';
-import { JwtRefreshGuard } from '../../domain/auth/guards/jwt-refresh.guard';
 
 @Controller('auth')
 export class AuthController {

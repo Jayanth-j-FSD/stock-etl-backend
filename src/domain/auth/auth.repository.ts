@@ -10,11 +10,7 @@ export class AuthRepository {
     private readonly refreshTokenRepository: Repository<RefreshToken>,
   ) {}
 
-  async createRefreshToken(
-    userId: string,
-    token: string,
-    expiresAt: Date,
-  ): Promise<RefreshToken> {
+  async createRefreshToken(userId: string, token: string, expiresAt: Date): Promise<RefreshToken> {
     const refreshToken = this.refreshTokenRepository.create({
       userId,
       token,

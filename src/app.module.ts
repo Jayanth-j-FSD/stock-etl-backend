@@ -4,6 +4,7 @@ import { DatabaseModule } from './infrastructure/database/database.module';
 import { AuthModule } from './domain/auth/auth.module';
 import { UsersModule } from './domain/users/users.module';
 import { StocksModule } from './domain/stocks/stocks.module';
+import { CurrencyModule } from './domain/currency/currency.module';
 import appConfig from './core/config/app.config';
 import databaseConfig from './core/config/database.config';
 import jwtConfig from './core/config/jwt.config';
@@ -24,6 +25,8 @@ import jwtConfig from './core/config/jwt.config';
     UsersModule,
     // Stocks module
     StocksModule,
+    // Currency module
+    CurrencyModule,
   ],
   controllers: [],
   providers: [],

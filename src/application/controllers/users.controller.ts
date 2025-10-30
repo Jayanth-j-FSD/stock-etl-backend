@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Put,
   Delete,
   Body,
@@ -11,7 +10,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { UserService } from '../../domain/users/user.service';
-import { CreateUserDto } from '../../domain/users/dto/create-user.dto';
 import { UpdateUserDto } from '../../domain/users/dto/update-user.dto';
 import { ResponseUserDto } from '../../domain/users/dto/response-user.dto';
 import { JwtAuthGuard } from '../../domain/auth/guards/jwt-auth.guard';

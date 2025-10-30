@@ -23,9 +23,7 @@ export class StockService {
     // Check if stock with symbol already exists
     const existingStock = await this.stockRepository.findBySymbol(normalizedDto.symbol);
     if (existingStock) {
-      throw new ConflictException(
-        `Stock with symbol ${normalizedDto.symbol} already exists`,
-      );
+      throw new ConflictException(`Stock with symbol ${normalizedDto.symbol} already exists`);
     }
 
     const stock = await this.stockRepository.create(normalizedDto);
@@ -68,15 +66,10 @@ export class StockService {
       : updateStockDto;
 
     // If symbol is being updated, check if new symbol already exists
-    if (
-      normalizedDto.symbol &&
-      normalizedDto.symbol !== existingStock.symbol
-    ) {
+    if (normalizedDto.symbol && normalizedDto.symbol !== existingStock.symbol) {
       const symbolExists = await this.stockRepository.findBySymbol(normalizedDto.symbol);
       if (symbolExists) {
-        throw new ConflictException(
-          `Stock with symbol ${normalizedDto.symbol} already exists`,
-        );
+        throw new ConflictException(`Stock with symbol ${normalizedDto.symbol} already exists`);
       }
     }
 
