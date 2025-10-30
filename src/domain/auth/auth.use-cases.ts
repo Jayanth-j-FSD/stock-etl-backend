@@ -76,8 +76,12 @@ export class AuthUseCases {
 
     // Verify token signature
     try {
-      const payload = this.jwtService.verify(refreshToken, {
-        secret: this.configService.get<string>('jwt.refreshSecret'),
+      const refreshSecret = this.configService.get<string>(
+        'jwt.refreshSecret',
+        'default-refresh-secret',
+      );
+      const payload = await this.jwtService.verifyAsync(refreshToken, {
+        secret: refreshSecret,
       });
 
       // Get user
@@ -106,16 +110,28 @@ export class AuthUseCases {
       email: user.email,
     };
 
-    // Generate access token
-    const accessToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('jwt.accessSecret'),
-      expiresIn: this.configService.get<string>('jwt.accessExpiresIn') as string,
+    // Get configuration values with defaults
+    const accessSecret = this.configService.get<string>(
+      'jwt.accessSecret',
+      'default-access-secret',
+    );
+    const refreshSecret = this.configService.get<string>(
+      'jwt.refreshSecret',
+      'default-refresh-secret',
+    );
+    const accessExpiresIn = this.configService.get('jwt.accessExpiresIn', '15m');
+    const refreshExpiresIn = this.configService.get('jwt.refreshExpiresIn', '7d');
+
+    // Generate access token (using latest signAsync method)
+    const accessToken = await this.jwtService.signAsync(payload, {
+      secret: accessSecret,
+      expiresIn: accessExpiresIn as any,
     });
 
-    // Generate refresh token
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.get<string>('jwt.refreshSecret'),
-      expiresIn: this.configService.get<string>('jwt.refreshExpiresIn') as string,
+    // Generate refresh token (using latest signAsync method)
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: refreshSecret,
+      expiresIn: refreshExpiresIn as any,
     });
 
     // Calculate expiration date for refresh token
