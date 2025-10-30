@@ -22,9 +22,9 @@ describe('StockService', () => {
     sector: 'Technology',
     industry: 'Consumer Electronics',
     marketCap: 2500000000000,
-    dayHigh: 152.00,
-    dayLow: 149.50,
-    openPrice: 150.00,
+    dayHigh: 152.0,
+    dayLow: 149.5,
+    openPrice: 150.0,
     previousClose: 149.75,
     volume: 50000000,
     createdAt: new Date('2024-01-01'),
@@ -111,7 +111,7 @@ describe('StockService', () => {
       expect(repository.create).toHaveBeenCalledWith(
         expect.objectContaining({
           symbol: 'GOOGL',
-        })
+        }),
       );
     });
 
@@ -193,17 +193,17 @@ describe('StockService', () => {
   describe('update', () => {
     it('should update stock', async () => {
       const updateDto: UpdateStockDto = {
-        price: 155.50,
+        price: 155.5,
       };
 
       repository.findById.mockResolvedValue(mockStock);
-      repository.update.mockResolvedValue({ ...mockStock, price: 155.50 });
+      repository.update.mockResolvedValue({ ...mockStock, price: 155.5 });
 
       const result = await service.update('123e4567-e89b-12d3-a456-426614174000', updateDto);
 
       expect(repository.update).toHaveBeenCalledWith(
         '123e4567-e89b-12d3-a456-426614174000',
-        updateDto
+        updateDto,
       );
       expect(result).toBeDefined();
     });
@@ -223,16 +223,16 @@ describe('StockService', () => {
         '123e4567-e89b-12d3-a456-426614174000',
         expect.objectContaining({
           symbol: 'GOOGL',
-        })
+        }),
       );
     });
 
     it('should throw NotFoundException if stock does not exist', async () => {
       repository.findById.mockResolvedValue(null);
 
-      await expect(
-        service.update('non-existent-id', { price: 155.50 })
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.update('non-existent-id', { price: 155.5 })).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw ConflictException if new symbol already exists', async () => {
@@ -245,18 +245,18 @@ describe('StockService', () => {
       repository.findBySymbol.mockResolvedValue(existingStock);
 
       await expect(
-        service.update('123e4567-e89b-12d3-a456-426614174000', updateDto)
+        service.update('123e4567-e89b-12d3-a456-426614174000', updateDto),
       ).rejects.toThrow(ConflictException);
     });
 
     it('should allow updating stock with same symbol', async () => {
       const updateDto: UpdateStockDto = {
         symbol: 'AAPL',
-        price: 155.50,
+        price: 155.5,
       };
 
       repository.findById.mockResolvedValue(mockStock);
-      repository.update.mockResolvedValue({ ...mockStock, price: 155.50 });
+      repository.update.mockResolvedValue({ ...mockStock, price: 155.5 });
 
       await service.update('123e4567-e89b-12d3-a456-426614174000', updateDto);
 
@@ -268,23 +268,23 @@ describe('StockService', () => {
       repository.update.mockResolvedValue(null);
 
       await expect(
-        service.update('123e4567-e89b-12d3-a456-426614174000', { price: 155.50 })
+        service.update('123e4567-e89b-12d3-a456-426614174000', { price: 155.5 }),
       ).rejects.toThrow(NotFoundException);
     });
 
     it('should not normalize symbol if not provided', async () => {
       const updateDto: UpdateStockDto = {
-        price: 155.50,
+        price: 155.5,
       };
 
       repository.findById.mockResolvedValue(mockStock);
-      repository.update.mockResolvedValue({ ...mockStock, price: 155.50 });
+      repository.update.mockResolvedValue({ ...mockStock, price: 155.5 });
 
       await service.update('123e4567-e89b-12d3-a456-426614174000', updateDto);
 
       expect(repository.update).toHaveBeenCalledWith(
         '123e4567-e89b-12d3-a456-426614174000',
-        updateDto
+        updateDto,
       );
     });
   });

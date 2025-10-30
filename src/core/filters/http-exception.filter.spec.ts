@@ -120,7 +120,7 @@ describe('HttpExceptionFilter', () => {
         expect.objectContaining({
           statusCode: HttpStatus.UNAUTHORIZED,
           message: ['Unauthorized'],
-        })
+        }),
       );
     });
 
@@ -134,7 +134,7 @@ describe('HttpExceptionFilter', () => {
         expect.objectContaining({
           statusCode: HttpStatus.FORBIDDEN,
           message: ['Forbidden resource'],
-        })
+        }),
       );
     });
   });
@@ -169,7 +169,7 @@ describe('HttpExceptionFilter', () => {
         expect.objectContaining({
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           message: ['Cannot read property of undefined'],
-        })
+        }),
       );
     });
   });
@@ -202,7 +202,7 @@ describe('HttpExceptionFilter', () => {
         expect.objectContaining({
           statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
           message: ['Internal server error'],
-        })
+        }),
       );
     });
   });
@@ -220,7 +220,7 @@ describe('HttpExceptionFilter', () => {
           timestamp: expect.any(String),
           path: expect.any(String),
           method: expect.any(String),
-        })
+        }),
       );
     });
 
@@ -235,7 +235,7 @@ describe('HttpExceptionFilter', () => {
       expect(mockResponse.json).toHaveBeenCalledWith(
         expect.objectContaining({
           timestamp: isoString,
-        })
+        }),
       );
     });
 
@@ -253,7 +253,7 @@ describe('HttpExceptionFilter', () => {
         expect.objectContaining({
           path: '/api/users',
           method: 'POST',
-        })
+        }),
       );
     });
   });

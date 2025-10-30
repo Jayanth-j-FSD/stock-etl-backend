@@ -62,7 +62,7 @@ describe('UserRepository', () => {
         'test@example.com',
         '$2b$10$hashedpassword',
         'John',
-        'Doe'
+        'Doe',
       );
 
       expect(mockRepository.create).toHaveBeenCalledWith({
@@ -80,10 +80,7 @@ describe('UserRepository', () => {
       mockRepository.create.mockReturnValue(userWithoutNames);
       mockRepository.save.mockResolvedValue(userWithoutNames);
 
-      const result = await repository.createUser(
-        'test@example.com',
-        '$2b$10$hashedpassword'
-      );
+      const result = await repository.createUser('test@example.com', '$2b$10$hashedpassword');
 
       expect(mockRepository.create).toHaveBeenCalledWith({
         email: 'test@example.com',

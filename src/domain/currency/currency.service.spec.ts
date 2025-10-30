@@ -96,7 +96,7 @@ describe('CurrencyService', () => {
         expect.objectContaining({
           code: 'GBP',
           baseCurrency: 'USD',
-        })
+        }),
       );
     });
 
@@ -190,7 +190,7 @@ describe('CurrencyService', () => {
 
       expect(repository.update).toHaveBeenCalledWith(
         '123e4567-e89b-12d3-a456-426614174000',
-        updateDto
+        updateDto,
       );
       expect(result).toBeDefined();
     });
@@ -212,16 +212,16 @@ describe('CurrencyService', () => {
         expect.objectContaining({
           code: 'EUR',
           baseCurrency: 'USD',
-        })
+        }),
       );
     });
 
     it('should throw NotFoundException if currency does not exist', async () => {
       repository.findById.mockResolvedValue(null);
 
-      await expect(
-        service.update('non-existent-id', { exchangeRate: 1.05 })
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.update('non-existent-id', { exchangeRate: 1.05 })).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw ConflictException if new code already exists', async () => {
@@ -234,7 +234,7 @@ describe('CurrencyService', () => {
       repository.findByCode.mockResolvedValue(existingCurrency);
 
       await expect(
-        service.update('123e4567-e89b-12d3-a456-426614174000', updateDto)
+        service.update('123e4567-e89b-12d3-a456-426614174000', updateDto),
       ).rejects.toThrow(ConflictException);
     });
 
@@ -257,7 +257,7 @@ describe('CurrencyService', () => {
       repository.update.mockResolvedValue(null);
 
       await expect(
-        service.update('123e4567-e89b-12d3-a456-426614174000', { exchangeRate: 1.05 })
+        service.update('123e4567-e89b-12d3-a456-426614174000', { exchangeRate: 1.05 }),
       ).rejects.toThrow(NotFoundException);
     });
   });

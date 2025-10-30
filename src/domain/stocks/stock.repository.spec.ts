@@ -20,9 +20,9 @@ describe('StockRepository', () => {
     sector: 'Technology',
     industry: 'Consumer Electronics',
     marketCap: 2500000000000,
-    dayHigh: 152.00,
-    dayLow: 149.50,
-    openPrice: 150.00,
+    dayHigh: 152.0,
+    dayLow: 149.5,
+    openPrice: 150.0,
     previousClose: 149.75,
     volume: 50000000,
     createdAt: new Date('2024-01-01'),
@@ -166,11 +166,11 @@ describe('StockRepository', () => {
     it('should update stock and return updated entity', async () => {
       const id = '123e4567-e89b-12d3-a456-426614174000';
       const updateDto: UpdateStockDto = {
-        price: 155.50,
+        price: 155.5,
       };
 
       mockRepository.update.mockResolvedValue({ affected: 1 } as any);
-      mockRepository.findOne.mockResolvedValue({ ...mockStock, price: 155.50 });
+      mockRepository.findOne.mockResolvedValue({ ...mockStock, price: 155.5 });
 
       const result = await repository.update(id, updateDto);
 
@@ -178,13 +178,13 @@ describe('StockRepository', () => {
         ...updateDto,
         lastUpdated: expect.any(Date),
       });
-      expect(result).toHaveProperty('price', 155.50);
+      expect(result).toHaveProperty('price', 155.5);
     });
 
     it('should update lastUpdated timestamp', async () => {
       const id = '123e4567-e89b-12d3-a456-426614174000';
       const updateDto: UpdateStockDto = {
-        price: 155.50,
+        price: 155.5,
       };
 
       mockRepository.update.mockResolvedValue({ affected: 1 } as any);
@@ -234,7 +234,7 @@ describe('StockRepository', () => {
       expect(mockRepository.createQueryBuilder).toHaveBeenCalledWith('stock');
       expect(mockQueryBuilder.where).toHaveBeenCalledWith(
         'stock.symbol ILIKE :query OR stock.name ILIKE :query',
-        { query: '%AAPL%' }
+        { query: '%AAPL%' },
       );
       expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith('stock.symbol', 'ASC');
       expect(result).toEqual([mockStock]);
@@ -251,10 +251,7 @@ describe('StockRepository', () => {
 
       await repository.searchBySymbolOrName('App');
 
-      expect(mockQueryBuilder.where).toHaveBeenCalledWith(
-        expect.any(String),
-        { query: '%App%' }
-      );
+      expect(mockQueryBuilder.where).toHaveBeenCalledWith(expect.any(String), { query: '%App%' });
     });
 
     it('should return empty array when no matches found', async () => {

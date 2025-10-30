@@ -80,7 +80,7 @@ describe('UserService', () => {
         'newuser@example.com',
         '$2b$10$hashedpassword',
         'John',
-        'Doe'
+        'Doe',
       );
       expect(result).toBeDefined();
     });
@@ -113,7 +113,7 @@ describe('UserService', () => {
         'minimal@example.com',
         '$2b$10$hashedpassword',
         undefined,
-        undefined
+        undefined,
       );
     });
   });
@@ -169,7 +169,7 @@ describe('UserService', () => {
 
       expect(repository.updateUser).toHaveBeenCalledWith(
         '123e4567-e89b-12d3-a456-426614174000',
-        updateDto
+        updateDto,
       );
       expect(bcrypt.hash).not.toHaveBeenCalled();
       expect(result).toBeDefined();
@@ -190,16 +190,16 @@ describe('UserService', () => {
         '123e4567-e89b-12d3-a456-426614174000',
         expect.objectContaining({
           password: '$2b$10$hashedpassword',
-        })
+        }),
       );
     });
 
     it('should throw NotFoundException if user does not exist', async () => {
       repository.findById.mockResolvedValue(null);
 
-      await expect(
-        service.updateUser('non-existent-id', { firstName: 'Jane' })
-      ).rejects.toThrow(NotFoundException);
+      await expect(service.updateUser('non-existent-id', { firstName: 'Jane' })).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw ConflictException if new email already exists', async () => {
@@ -212,7 +212,7 @@ describe('UserService', () => {
       repository.findByEmail.mockResolvedValue(existingEmailUser);
 
       await expect(
-        service.updateUser('123e4567-e89b-12d3-a456-426614174000', updateDto)
+        service.updateUser('123e4567-e89b-12d3-a456-426614174000', updateDto),
       ).rejects.toThrow(ConflictException);
     });
 
@@ -235,7 +235,7 @@ describe('UserService', () => {
       repository.updateUser.mockResolvedValue(null);
 
       await expect(
-        service.updateUser('123e4567-e89b-12d3-a456-426614174000', { firstName: 'Jane' })
+        service.updateUser('123e4567-e89b-12d3-a456-426614174000', { firstName: 'Jane' }),
       ).rejects.toThrow(NotFoundException);
     });
 
@@ -258,7 +258,7 @@ describe('UserService', () => {
           password: '$2b$10$hashedpassword',
           firstName: 'Jane',
           lastName: 'Smith',
-        })
+        }),
       );
     });
   });
@@ -270,7 +270,9 @@ describe('UserService', () => {
 
       await service.deleteUser('123e4567-e89b-12d3-a456-426614174000');
 
-      expect(repository.softDeleteUser).toHaveBeenCalledWith('123e4567-e89b-12d3-a456-426614174000');
+      expect(repository.softDeleteUser).toHaveBeenCalledWith(
+        '123e4567-e89b-12d3-a456-426614174000',
+      );
     });
 
     it('should throw NotFoundException if user does not exist', async () => {

@@ -52,17 +52,11 @@ describe('LoggingInterceptor', () => {
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
       expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Incoming Request: GET /api/test')
+        expect.stringContaining('Incoming Request: GET /api/test'),
       );
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Params: {"id":"1"}')
-      );
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Query: {"page":"1"}')
-      );
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Body: {"name":"test"}')
-      );
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Params: {"id":"1"}'));
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Query: {"page":"1"}'));
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Body: {"name":"test"}'));
       done();
     });
   });
@@ -71,14 +65,13 @@ describe('LoggingInterceptor', () => {
     const logSpy = jest.spyOn(interceptor['logger'], 'log');
     mockCallHandler.handle = jest.fn().mockReturnValue(of({ result: 'success' }));
 
-    jest.spyOn(Date, 'now')
-      .mockReturnValueOnce(1000)  // Start time
+    jest
+      .spyOn(Date, 'now')
+      .mockReturnValueOnce(1000) // Start time
       .mockReturnValueOnce(1250); // End time
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
-      expect(logSpy).toHaveBeenCalledWith(
-        'Outgoing Response: GET /api/test - 250ms - Success'
-      );
+      expect(logSpy).toHaveBeenCalledWith('Outgoing Response: GET /api/test - 250ms - Success');
       done();
     });
   });
@@ -88,17 +81,18 @@ describe('LoggingInterceptor', () => {
     const error = new Error('Test error');
     mockCallHandler.handle = jest.fn().mockReturnValue(throwError(() => error));
 
-    jest.spyOn(Date, 'now')
-      .mockReturnValueOnce(1000)  // Start time
+    jest
+      .spyOn(Date, 'now')
+      .mockReturnValueOnce(1000) // Start time
       .mockReturnValueOnce(1500); // End time
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe({
       error: () => {
         expect(errorSpy).toHaveBeenCalledWith(
-          'Outgoing Response: GET /api/test - 500ms - Error: Test error'
+          'Outgoing Response: GET /api/test - 500ms - Error: Test error',
         );
         done();
-      }
+      },
     });
   });
 
@@ -110,10 +104,10 @@ describe('LoggingInterceptor', () => {
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
       expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Incoming Request: POST /api/users')
+        expect.stringContaining('Incoming Request: POST /api/users'),
       );
       expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Outgoing Response: POST /api/users')
+        expect.stringContaining('Outgoing Response: POST /api/users'),
       );
       done();
     });
@@ -127,7 +121,7 @@ describe('LoggingInterceptor', () => {
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
       expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Incoming Request: PUT /api/users/1')
+        expect.stringContaining('Incoming Request: PUT /api/users/1'),
       );
       done();
     });
@@ -141,7 +135,7 @@ describe('LoggingInterceptor', () => {
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
       expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Incoming Request: DELETE /api/users/1')
+        expect.stringContaining('Incoming Request: DELETE /api/users/1'),
       );
       done();
     });
@@ -159,15 +153,9 @@ describe('LoggingInterceptor', () => {
     mockCallHandler.handle = jest.fn().mockReturnValue(of({ result: 'success' }));
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Params: {}')
-      );
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Query: {}')
-      );
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Body: {}')
-      );
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Params: {}'));
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Query: {}'));
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Body: {}'));
       done();
     });
   });
@@ -176,14 +164,13 @@ describe('LoggingInterceptor', () => {
     const logSpy = jest.spyOn(interceptor['logger'], 'log');
     mockCallHandler.handle = jest.fn().mockReturnValue(of({ result: 'success' }));
 
-    jest.spyOn(Date, 'now')
-      .mockReturnValueOnce(1000)  // Start time
+    jest
+      .spyOn(Date, 'now')
+      .mockReturnValueOnce(1000) // Start time
       .mockReturnValueOnce(2000); // End time (1000ms later)
 
     interceptor.intercept(mockExecutionContext, mockCallHandler).subscribe(() => {
-      expect(logSpy).toHaveBeenCalledWith(
-        expect.stringContaining('1000ms')
-      );
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('1000ms'));
       done();
     });
   });

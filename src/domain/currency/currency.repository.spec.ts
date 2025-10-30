@@ -255,7 +255,7 @@ describe('CurrencyRepository', () => {
       expect(mockRepository.createQueryBuilder).toHaveBeenCalledWith('currency');
       expect(mockQueryBuilder.where).toHaveBeenCalledWith(
         'currency.code ILIKE :query OR currency.name ILIKE :query',
-        { query: '%USD%' }
+        { query: '%USD%' },
       );
       expect(mockQueryBuilder.orderBy).toHaveBeenCalledWith('currency.code', 'ASC');
       expect(result).toEqual([mockCurrency]);
@@ -272,10 +272,7 @@ describe('CurrencyRepository', () => {
 
       await repository.searchByCodeOrName('US');
 
-      expect(mockQueryBuilder.where).toHaveBeenCalledWith(
-        expect.any(String),
-        { query: '%US%' }
-      );
+      expect(mockQueryBuilder.where).toHaveBeenCalledWith(expect.any(String), { query: '%US%' });
     });
 
     it('should return empty array when no matches found', async () => {
